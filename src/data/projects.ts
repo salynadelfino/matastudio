@@ -70,6 +70,7 @@ export const projects: Project[] = [
     scope: ['Website redesign', 'Customer journey strategy'],
     attribution: 'founder',
     image: ctcWebsite,
+    href: 'https://ctcadministration.com',
     imageAlt: 'The redesigned CTC Administration website open on a laptop, beside a phone showing CTC’s social content.',
   },
 ];
