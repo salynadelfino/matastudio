@@ -5,9 +5,10 @@
  * 1. Put the file in src/assets/images/ (JPG/WebP; 2400px+ wide for `hero`).
  * 2. Import it below and set `src` on the matching slot, with a short `alt`.
  *
- * Photos are shown in their natural tone with a light film grain.
+ * Every photo is shown in black & white with film grain, so mixed sources look like one shoot.
  * Until `src` is set, the site shows a grey frame with the `brief` as art direction.
  */
+import hero from '../assets/images/hero.webp';
 import aboutWalking from '../assets/images/about-walking.webp';
 import contactPhone from '../assets/images/contact-phone.webp';
 import tileCamera from '../assets/images/tile-camera.webp';
@@ -25,9 +26,10 @@ export interface Slot {
 
 export const images = {
   hero: {
-    // To come — add the hero image here.
-    alt: '',
-    brief: 'Hero image to come.',
+    src: hero,
+    alt: 'A woman in a black blazer raises a hand across one eye, caught in motion blur.',
+    brief: '',
+    focus: '55% 40%',
   },
   about: {
     src: aboutWalking,

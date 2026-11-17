@@ -13,6 +13,8 @@
  *   'mata'    — a MATA Studio client project
  *   'founder' — delivered by the founder in an in-house or previous role, not as a MATA client
  */
+import ctcWebsite from '../assets/work/ctc-website.webp';
+
 export type Category =
   | 'Brand & Identity'
   | 'Website Design & Development'
@@ -32,6 +34,8 @@ export interface Project {
   /** Shown on the featured layout */
   brief?: string;
   approach?: string;
+  /** Only outcomes you can evidence */
+  outcome?: string;
   /** What was delivered, e.g. ['Positioning', 'Visual identity'] */
   scope: string[];
   attribution: 'mata' | 'founder';
@@ -52,7 +56,7 @@ export const attributionLabel: Record<Project['attribution'], string> = {
 
 export const projects: Project[] = [
   {
-    // DRAFT COPY — check every line is accurate before publishing, and confirm CTC is happy to be named.
+    // CTC has consented to being featured. Keep every line accurate; add a figure to `outcome` once you have one.
     title: 'CTC Administration',
     category: 'Website & Customer Journey',
     sector: 'UK visa & immigration administration',
@@ -62,8 +66,10 @@ export const projects: Project[] = [
       'Make a detailed, trust-sensitive service easier to understand, easier to navigate and easier to enquire about.',
     approach:
       'A redesigned website alongside a reworked customer journey, from first visit to enquiry and beyond, with clearer structure, messaging and next steps at each stage.',
+    outcome: 'An increase in new clients for CTC after the new website and customer journey went live.',
     scope: ['Website redesign', 'Customer journey strategy'],
     attribution: 'founder',
-    imageBrief: 'CTC website on a laptop and phone, shot on a desk in the same warm tone.',
+    image: ctcWebsite,
+    imageAlt: 'The redesigned CTC Administration website open on a laptop, beside a phone showing CTC’s social content.',
   },
 ];
