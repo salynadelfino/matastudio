@@ -17,9 +17,11 @@ Deploy `dist/` to any static host (Netlify, Vercel, Cloudflare Pages).
 | What | File |
 | --- | --- |
 | Email, socials, location, founder bio & portrait | `src/data/site.ts` |
+| Photography (hero, about, tiles, contact) | `src/data/images.ts` (instructions at the top of the file) |
 | Services list and "Why MATA" points | `src/data/services.ts` |
 | Portfolio projects | `src/data/projects.ts` (instructions at the top of the file) |
 
+All photos are shown black & white with film grain automatically, so mixed sources look like one shoot.
 Project images go in `src/assets/work/` and are resized/converted to modern formats automatically at build time.
 Use `attribution: 'prior'` for work delivered before MATA Studio — it's labelled as "Prior experience" on the site.
 
@@ -32,6 +34,7 @@ Without it, the form validates and then opens the visitor's email app with their
 
 - [ ] Real email address and Instagram / LinkedIn URLs in `src/data/site.ts`
 - [ ] Founder bio and portrait
+- [ ] Photography for the 6 slots in `src/data/images.ts` (each slot's brief describes the shot)
 - [ ] Real projects and images (remove placeholders)
 - [ ] Live domain in `astro.config.mjs` (`site`) — used for canonical and social share URLs
 - [ ] `PUBLIC_FORM_ENDPOINT` configured and a test enquiry received

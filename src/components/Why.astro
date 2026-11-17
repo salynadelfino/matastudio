@@ -1,37 +1,47 @@
 ---
 import { differentiators } from '../data/services';
-const numerals = ['i.', 'ii.', 'iii.', 'iv.', 'v.'];
+const split = (t: string) => {
+  const words = t.replace(/\.$/, '').split(' ');
+  return [words.slice(0, -1).join(' '), words.at(-1)];
+};
 ---
 
 <section class="section why" id="why" aria-labelledby="why-title">
   <div class="wrap">
-    <p class="label" data-reveal><span class="num">04</span> Why MATA</p>
-    <h2 class="display why__title" id="why-title" data-reveal-lines>
-      <span class="line"><span style="--i:0">More than marketing.</span></span>
-      <span class="line"><span style="--i:1">A little more <em>perspective.</em></span></span>
-    </h2>
-
+    <div class="why__head">
+      <p class="micro" data-reveal>Why MATA</p>
+      <h2 class="headline center" id="why-title" data-reveal>More than marketing.<br /><em>A little more perspective.</em></h2>
+    </div>
     <ol class="why__list">
       {
-        differentiators.map((d, i) => (
-          <li data-reveal style={`--d:${i}`}>
-            <span class="why__num">{numerals[i]}</span>
-            <h3>{d.title}</h3>
-            <p>{d.body}</p>
-          </li>
-        ))
+        differentiators.map((d, i) => {
+          const [caps, it] = split(d.title);
+          return (
+            <li data-reveal style={`--d:${i}`}>
+              <span class="micro why__num">0{i + 1}</span>
+              <h3>
+                {caps} <em>{it}</em>
+              </h3>
+              <p>{d.body}</p>
+            </li>
+          );
+        })
       }
     </ol>
   </div>
 </section>
 
 <style>
-  .why__title {
-    font-size: clamp(2.4rem, 1.4rem + 4vw, 5.25rem);
-    margin: 2.5rem 0 clamp(3.5rem, 7vw, 6rem);
+  .why__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+    margin-bottom: clamp(3.5rem, 7vw, 6rem);
   }
-  .why__title em {
-    color: var(--olive);
+  .why__head .micro {
+    margin: 0;
+    color: var(--muted);
   }
   .why__list {
     list-style: none;
@@ -39,38 +49,35 @@ const numerals = ['i.', 'ii.', 'iii.', 'iv.', 'v.'];
     padding: 0;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(2rem, 4vw, 4rem);
-  }
-  .why__list li {
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--espresso);
+    gap: clamp(2.5rem, 5vw, 5rem);
+    text-align: center;
   }
   .why__num {
     display: block;
-    font-family: var(--serif);
-    font-style: italic;
-    color: var(--clay);
-    margin-bottom: 2.5rem;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
   }
   .why__list h3 {
-    margin: 0 0 0.75rem;
+    margin: 0 0 1rem;
     font-family: var(--serif);
-    font-weight: 350;
-    font-size: clamp(1.5rem, 1.2rem + 0.8vw, 2rem);
-    letter-spacing: -0.02em;
-    line-height: 1.1;
+    font-variation-settings: 'opsz' 22;
+    font-weight: 400;
+    font-size: clamp(1.3rem, 1.1rem + 0.7vw, 1.75rem);
+    line-height: 1.15;
+    text-transform: uppercase;
+  }
+  .why__list h3 em {
+    text-transform: none;
   }
   .why__list p {
-    margin: 0;
+    margin: 0 auto;
+    max-width: 30ch;
+    font-size: 0.95rem;
     color: var(--muted);
-    max-width: 32ch;
   }
   @media (max-width: 860px) {
     .why__list {
       grid-template-columns: 1fr;
-    }
-    .why__num {
-      margin-bottom: 1rem;
     }
   }
 </style>

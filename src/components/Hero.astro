@@ -1,232 +1,133 @@
 ---
-import Eye from './Eye.astro';
-import { services } from '../data/services';
+import Photo from './Photo.astro';
+import { images } from '../data/images';
 ---
 
-<section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="wrap hero__grid">
-    <div class="hero__meta" data-reveal>
-      <span>MATA Studio</span>
-      <span class="hide-sm">Boutique digital marketing</span>
-      <span>Dubai, UAE &nbsp;·&nbsp; <span data-dubai-time>--:--</span> GST</span>
-    </div>
+<section class="hero" id="top" data-hero aria-labelledby="hero-title">
+  <Photo slot={images.hero} sizes="100vw" loading="eager" tone="mid" class="hero__photo" />
+  <div class="hero__shade" aria-hidden="true"></div>
 
-    <div class="hero__eye" data-reveal style="--d:3">
-      <span class="crop crop--tl"></span><span class="crop crop--tr"></span>
-      <span class="crop crop--bl"></span><span class="crop crop--br"></span>
-      <Eye />
-    </div>
+  <h1 class="hero__mark" id="hero-title">
+    <span class="visually-hidden">MATA Studio</span>
+    <span class="hero__word" aria-hidden="true">
+      {['m', 'a', 't', 'a'].map((l, i) => <span style={`--i:${i}`}>{l}</span>)}
+    </span>
+  </h1>
 
-    <h1 class="display hero__title" id="hero-title" data-reveal-lines>
-      <span class="visually-hidden">MATA Studio — </span>
-      <span class="line"><span style="--i:0">Change</span></span>
-      <span class="line"><span style="--i:1">the way</span></span>
-      <span class="line"><span style="--i:2">you’re <em>seen.</em></span></span>
-    </h1>
-
-    <div class="hero__foot">
-      <p class="lede hero__lede" data-reveal style="--d:4">
-        We’re a boutique digital marketing studio helping ambitious businesses build their presence, find their
-        audience and stand out for the right reasons.
-      </p>
-      <div class="hero__actions" data-reveal style="--d:5">
-        <p class="hero__where">Dubai-based.<br />Working everywhere.</p>
-        <a class="btn" href="#contact">
-          Let’s talk
-          <svg class="arrow" width="16" height="10" viewBox="0 0 16 10" aria-hidden="true"
-            ><path d="M0 5h15M11 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"></path></svg
-          >
-        </a>
-      </div>
-    </div>
+  <div class="wrap hero__foot micro">
+    <span>Dubai-based</span>
+    <span>Working everywhere</span>
   </div>
+</section>
 
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker__track">
-      {
-        [0, 1].map(() => (
-          <div class="ticker__set">
-            {services.map((s) => (
-              <span>
-                {s.title}
-                <i>◦</i>
-              </span>
-            ))}
-          </div>
-        ))
-      }
-    </div>
+<section class="dark statement" aria-label="Introduction">
+  <div class="wrap statement__inner">
+    <p class="micro statement__kicker" data-reveal>MATA Studio — Dubai</p>
+    <p class="headline center statement__title" data-reveal style="--d:1">
+      Change the way<br /><em>you’re</em> seen.
+    </p>
+    <p class="statement__lede center" data-reveal style="--d:2">
+      We’re a boutique digital marketing studio helping ambitious businesses build their presence, find their
+      audience and stand out for the right reasons.
+    </p>
+    <div data-reveal style="--d:3"><a class="btn" href="#contact">Let’s talk</a></div>
   </div>
 </section>
 
 <style>
   .hero {
     position: relative;
-    min-height: 100svh;
+    height: clamp(30rem, 88svh, 62rem);
+    color: var(--paper);
+    overflow: hidden;
+  }
+  .hero :global(.hero__photo) {
+    position: absolute;
+    inset: 0;
+    animation: settle 2.4s var(--ease) both;
+  }
+  .hero :global(.photo__ph) {
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: calc(var(--nav-h) + 0.5rem);
+    text-align: center;
+  }
+  .hero__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.22), transparent 30%, transparent 70%, rgba(0, 0, 0, 0.2));
+    pointer-events: none;
+  }
+  .hero__mark {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-46%);
+    margin: 0;
+    text-align: center;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-variation-settings: 'opsz' 96;
+    font-size: min(40vw, 46rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
+    pointer-events: none;
+  }
+  .hero__word {
+    display: inline-flex;
+  }
+  .hero__word span {
+    display: inline-block;
+    animation: rise 1.6s var(--ease) both;
+    animation-delay: calc(0.25s + var(--i) * 0.09s);
+  }
+  .hero__foot {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  @keyframes settle {
+    from {
+      transform: scale(1.08);
+      filter: brightness(0.85);
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.12em);
+    }
+  }
+
+  .statement__inner {
     display: flex;
     flex-direction: column;
-    padding-top: calc(var(--nav-h) + clamp(1.5rem, 4vw, 3rem));
-  }
-  .hero__grid {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    grid-template-rows: auto 1fr auto;
-    column-gap: 1.5rem;
-    align-content: start;
-  }
-  .hero__meta {
-    grid-column: 1 / -1;
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--line);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-  .hero__title {
-    grid-column: 1 / span 9;
-    grid-row: 2;
-    align-self: end;
-    position: relative;
-    z-index: 1;
-    font-size: clamp(3.6rem, 0.5rem + 10.4vw, 11.5rem);
-    line-height: 0.86;
-    margin-top: clamp(1.5rem, 4vw, 3rem);
-  }
-  .hero__title .line:nth-child(3) {
-    padding-left: 0.9em;
-  }
-  .hero__title em {
-    color: var(--olive);
-  }
-  .hero__eye {
-    grid-column: 8 / -1;
-    grid-row: 2;
-    align-self: center;
-    justify-self: end;
-    position: relative;
-    width: min(100%, 27rem, 54svh);
-    margin-top: clamp(1rem, 2vw, 2rem);
-    padding: clamp(1rem, 2.5vw, 2rem);
-  }
-  .crop {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    border: 0 solid var(--espresso);
-  }
-  .crop--tl { top: 0; left: 0; border-width: 1px 0 0 1px; }
-  .crop--tr { top: 0; right: 0; border-width: 1px 1px 0 0; }
-  .crop--bl { bottom: 0; left: 0; border-width: 0 0 1px 1px; }
-  .crop--br { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
-
-  .hero__foot {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: 1.5rem;
-    align-items: end;
-    padding-block: clamp(1.75rem, 3.5vw, 2.75rem);
-  }
-  .hero__lede {
-    grid-column: 1 / span 6;
-    margin: 0;
-    max-width: 36ch;
-    font-size: clamp(1.15rem, 0.9rem + 0.75vw, 1.5rem);
-  }
-  .hero__actions {
-    grid-column: 8 / -1;
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 2rem;
-  }
-  .hero__where {
-    margin: 0;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    color: var(--muted);
-  }
-
-  .ticker {
-    border-block: 1px solid var(--line);
-    overflow: hidden;
-    padding-block: 1.1rem;
-  }
-  .ticker__track {
-    display: flex;
-    width: max-content;
-    animation: ticker 48s linear infinite;
-  }
-  .ticker__set {
-    display: flex;
-  }
-  .ticker span {
-    display: inline-flex;
     align-items: center;
-    gap: 2.5rem;
-    padding-right: 2.5rem;
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
-    letter-spacing: -0.01em;
-    white-space: nowrap;
+    gap: 2rem;
+    padding-block: clamp(5.5rem, 13vw, 10rem);
   }
-  .ticker i {
-    font-style: normal;
-    color: var(--clay);
+  .statement__kicker {
+    margin: 0;
+    color: rgba(247, 245, 241, 0.55);
   }
-  @keyframes ticker {
-    to {
-      transform: translateX(-50%);
-    }
+  .statement__title {
+    font-size: clamp(2.1rem, 1.2rem + 3.6vw, 4.6rem);
   }
-
-  @media (max-width: 960px) {
-    .hero__title {
-      grid-column: 1 / -1;
-      grid-row: 3;
-      margin-top: 0;
-    }
-    .hero__eye {
-      grid-column: 4 / -1;
-      grid-row: 2;
-      width: min(100%, 26rem);
-      margin-block: 1.5rem 0.5rem;
-    }
-    .hero__grid {
-      grid-template-rows: auto auto auto auto;
-    }
-    .hero__foot {
-      grid-row: 4;
-    }
-    .hero__lede,
-    .hero__actions {
-      grid-column: 1 / -1;
-    }
-    .hero__actions {
-      margin-top: 2rem;
-    }
+  .statement__lede {
+    margin: 0;
+    max-width: 36rem;
+    color: rgba(247, 245, 241, 0.7);
   }
   @media (max-width: 560px) {
-    .hide-sm {
-      display: none;
+    .hero {
+      height: 78svh;
     }
-    .hero__eye {
-      grid-column: 4 / -1;
-      width: min(100%, 15rem);
-      margin-block: 1rem 0;
-    }
-    .hero__actions {
-      margin-top: 1.5rem;
-    }
-    .hero__title .line:nth-child(3) {
-      padding-left: 0;
+    .hero__mark {
+      font-size: 44vw;
     }
   }
 </style>

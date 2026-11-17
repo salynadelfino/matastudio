@@ -2,7 +2,7 @@
 import ProjectCard from './ProjectCard.astro';
 import { projects } from '../data/projects';
 
-// Editorial rhythm: the layout cycles through five compositions, so any number of projects works.
+// The layout cycles through five compositions, so any number of projects works.
 const layout = [
   { cls: 'w-a', ratio: '4 / 3', sizes: '(max-width: 760px) 100vw, 58vw' },
   { cls: 'w-b', ratio: '4 / 5', sizes: '(max-width: 760px) 100vw, 33vw' },
@@ -13,19 +13,15 @@ const layout = [
 const hasPrior = projects.some((p) => p.attribution === 'prior');
 ---
 
-<section class="section work" id="work" aria-labelledby="work-title">
+<section class="section dark work" id="work" aria-labelledby="work-title">
   <div class="wrap">
     <div class="work__head">
-      <p class="label" data-reveal><span class="num">03</span> Selected work</p>
-      <h2 class="display h2" id="work-title" data-reveal-lines>
-        <span class="line"><span style="--i:0">A little of what</span></span>
-        <span class="line"><span style="--i:1">we’ve been <em>working on.</em></span></span>
-      </h2>
+      <p class="micro" data-reveal>Selected work</p>
+      <h2 class="headline center" id="work-title" data-reveal>A little of what<br /><em>we’ve been working on.</em></h2>
       {
         hasPrior && (
-          <p class="work__note" data-reveal>
-            Projects marked <strong>Prior experience</strong> were delivered by our founder before MATA Studio. Everything
-            else is MATA’s own work.
+          <p class="work__note center" data-reveal>
+            Work marked <span class="micro">Prior experience</span> was delivered by our founder before MATA Studio.
           </p>
         )
       }
@@ -47,43 +43,27 @@ const hasPrior = projects.some((p) => p.attribution === 'prior');
 </section>
 
 <style>
-  .work {
-    background: var(--espresso);
-    color: var(--ivory);
-  }
-  .work ::selection {
-    background: var(--ivory);
-    color: var(--espresso);
-  }
   .work__head {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: 1.5rem;
-    row-gap: 2.5rem;
-    margin-bottom: clamp(3.5rem, 8vw, 7rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+    margin-bottom: clamp(4rem, 8vw, 7rem);
   }
-  .work__head .label,
-  .work__head h2 {
-    grid-column: 1 / -1;
-  }
-  .work__head h2 .line:nth-child(2) {
-    padding-left: 1.2em;
-  }
-  .work__head em {
-    color: var(--sand);
+  .work__head > .micro {
+    margin: 0;
+    color: rgba(247, 245, 241, 0.5);
   }
   .work__note {
-    grid-column: 8 / -1;
     margin: 0;
-    font-size: 0.9rem;
-    color: rgba(244, 239, 230, 0.65);
-    max-width: 32rem;
+    max-width: 30rem;
+    font-size: 0.88rem;
+    color: rgba(247, 245, 241, 0.6);
   }
-  .work__note strong {
-    font-weight: 500;
-    color: var(--ivory);
+  .work__note .micro {
+    font-size: 0.6rem;
+    color: var(--paper);
   }
-
   .work__grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -95,21 +75,11 @@ const hasPrior = projects.some((p) => p.attribution === 'prior');
   .w-c { grid-column: 2 / span 4; }
   .w-d { grid-column: 7 / span 6; margin-top: clamp(3rem, 10vw, 9rem); }
   .w-e { grid-column: 1 / -1; }
-
-  .work__item :global(.project__frame) {
-    aspect-ratio: var(--ratio);
-  }
-
   @media (max-width: 760px) {
     .work__grid > * {
       grid-column: 1 / -1 !important;
       margin-top: 0 !important;
-    }
-    .work__item :global(.project__frame) {
-      aspect-ratio: 4 / 3;
-    }
-    .work__note {
-      grid-column: 1 / -1;
+      --ratio: 4 / 3 !important;
     }
   }
 </style>
