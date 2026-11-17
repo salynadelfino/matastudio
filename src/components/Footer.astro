@@ -17,7 +17,7 @@ const year = new Date().getFullYear();
       </ul>
     </div>
 
-    <p class="footer__mark" aria-hidden="true">mata</p>
+    <p class="footer__mark" aria-hidden="true" data-blink><span class="blink blink--scroll">mata <em>studio</em></span></p>
 
     <div class="footer__base micro">
       <span>© {year} {site.name}</span>
@@ -60,9 +60,17 @@ const year = new Date().getFullYear();
     font-family: var(--serif);
     font-weight: 400;
     font-variation-settings: 'opsz' 96;
-    font-size: min(36vw, 33rem);
-    line-height: 0.8;
-    letter-spacing: -0.045em;
+    font-size: min(17vw, 15rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+  }
+  .footer__mark span {
+    display: inline-block;
+    padding: 0.05em 0.08em;
+  }
+  .footer__mark em {
+    font-style: italic;
+    letter-spacing: -0.02em;
   }
   .footer__base {
     display: flex;

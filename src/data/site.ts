@@ -23,9 +23,6 @@ export const site = {
     role: 'Founder',
     // PLACEHOLDER — edit to a short, accurate bio (2–3 sentences).
     bio: 'MATA is led by founder Salyna Delfino, who brings marketing strategy, operations and a commercial mindset to every project. You work with her directly, from the first conversation to the finished work.',
-    // Add a portrait to src/assets/ and import it here, e.g.
-    //   import portrait from '../assets/salyna.jpg';  then  portrait: portrait,
-    portrait: undefined as ImageMetadata | undefined,
   },
 };
 

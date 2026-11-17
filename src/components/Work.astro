@@ -10,7 +10,8 @@ const layout = [
   { cls: 'w-d', ratio: '3 / 2', sizes: '(max-width: 760px) 100vw, 50vw' },
   { cls: 'w-e', ratio: '21 / 9', sizes: '100vw' },
 ];
-const hasPrior = projects.some((p) => p.attribution === 'prior');
+const hasFounder = projects.some((p) => p.attribution === 'founder');
+const single = projects.length === 1;
 ---
 
 <section class="section dark work" id="work" aria-labelledby="work-title">
@@ -19,14 +20,21 @@ const hasPrior = projects.some((p) => p.attribution === 'prior');
       <p class="micro" data-reveal>Selected work</p>
       <h2 class="headline center" id="work-title" data-reveal>A little of what<br /><em>we’ve been working on.</em></h2>
       {
-        hasPrior && (
+        hasFounder && (
           <p class="work__note center" data-reveal>
-            Work marked <span class="micro">Prior experience</span> was delivered by our founder before MATA Studio.
+            Work marked <span class="micro">Founder experience</span> was delivered by our founder in an in-house role,
+            not as a MATA Studio client project.
           </p>
         )
       }
     </div>
 
+    {
+      single ? (
+        <div data-reveal>
+          <ProjectCard project={projects[0]} index={0} sizes="(max-width: 960px) 100vw, 58vw" feature />
+        </div>
+      ) : (
     <div class="work__grid">
       {
         projects.map((project, i) => {
@@ -39,6 +47,8 @@ const hasPrior = projects.some((p) => p.attribution === 'prior');
         })
       }
     </div>
+      )
+    }
   </div>
 </section>
 

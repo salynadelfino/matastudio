@@ -7,16 +7,20 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
 
 <section class="contact" id="contact" aria-labelledby="contact-title">
   <div class="contact__media">
-    <Photo slot={images.contact} tone="mid" sizes="(max-width: 960px) 100vw, 45vw" />
+    <Photo slot={images.contact} tone="mid" sizes="(max-width: 960px) 100vw, 45vw" widths={[480, 800, 1086]} />
   </div>
 
   <div class="contact__panel">
     <p class="micro contact__label" data-reveal>Contact</p>
-    <h2 class="headline" id="contact-title" data-reveal>Let’s make<br /><em>something happen.</em></h2>
-    <p class="contact__copy" data-reveal>
-      Have a business you want to grow, a brand that needs a fresh perspective or simply an idea you’d like to
-      explore? We’d love to hear about it.
-    </p>
+    <h2 class="headline" id="contact-title" data-reveal>It starts with<br /><em>a conversation.</em></h2>
+    <div class="contact__copy" data-reveal>
+      <p class="contact__lede">Sometimes all it takes is a fresh perspective.</p>
+      <p>
+        Whether you’re building something new, rethinking your existing brand or looking for a more considered approach
+        to marketing, we’d like to hear what you have in mind.
+      </p>
+      <p>Tell us a little about your business. We’ll take it from there.</p>
+    </div>
 
     <form class="form" data-contact-form data-endpoint={endpoint} data-email={site.email} novalidate data-reveal>
       <div class="form__row">
@@ -36,7 +40,7 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
         <input id="f-company" name="company" type="text" autocomplete="organization" />
       </div>
       <div class="field">
-        <label class="micro" for="f-message">Tell us a little about it *</label>
+        <label class="micro" for="f-message">About your business *</label>
         <textarea id="f-message" name="message" rows="3" required aria-describedby="e-message"></textarea>
         <p class="field__error" id="e-message" aria-live="polite"></p>
       </div>
@@ -93,9 +97,21 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
     color: var(--muted);
   }
   .contact__copy {
-    max-width: 30rem;
+    display: grid;
+    gap: 0.9rem;
+    max-width: 32rem;
     margin: 1.75rem 0 2.75rem;
     color: var(--muted);
+  }
+  .contact__copy p {
+    margin: 0;
+  }
+  .contact__copy .contact__lede {
+    font-family: var(--serif);
+    font-variation-settings: 'opsz' 22;
+    font-size: clamp(1.15rem, 1rem + 0.5vw, 1.35rem);
+    line-height: 1.4;
+    color: var(--ink);
   }
 
   .form {

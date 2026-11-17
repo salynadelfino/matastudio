@@ -1,9 +1,5 @@
 ---
 import { differentiators } from '../data/services';
-const split = (t: string) => {
-  const words = t.replace(/\.$/, '').split(' ');
-  return [words.slice(0, -1).join(' '), words.at(-1)];
-};
 ---
 
 <section class="section why" id="why" aria-labelledby="why-title">
@@ -15,7 +11,7 @@ const split = (t: string) => {
     <ol class="why__list">
       {
         differentiators.map((d, i) => {
-          const [caps, it] = split(d.title);
+          const [caps, it] = d.display;
           return (
             <li data-reveal style={`--d:${i}`}>
               <span class="micro why__num">0{i + 1}</span>
@@ -71,7 +67,7 @@ const split = (t: string) => {
   }
   .why__list p {
     margin: 0 auto;
-    max-width: 30ch;
+    max-width: 36ch;
     font-size: 0.95rem;
     color: var(--muted);
   }

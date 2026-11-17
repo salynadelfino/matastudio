@@ -243,3 +243,32 @@ a {
     transition-delay: 0ms !important;
   }
 }
+
+/* ---------- Blink: the wordmark opens like an eye, then blinks once ---------- */
+
+@keyframes blink {
+  0% {
+    clip-path: ellipse(80% 0% at 50% 54%);
+  }
+  40%,
+  56% {
+    clip-path: ellipse(85% 110% at 50% 54%);
+  }
+  62% {
+    clip-path: ellipse(85% 2% at 50% 54%);
+  }
+  70%,
+  100% {
+    clip-path: ellipse(85% 110% at 50% 54%);
+  }
+}
+.blink--load {
+  animation: blink 2.6s cubic-bezier(0.65, 0, 0.35, 1) 0.35s both;
+}
+/* Observe the wrapper ([data-blink]): a fully closed lid has no visible area to observe. */
+.js [data-blink] .blink--scroll {
+  clip-path: ellipse(80% 0% at 50% 54%);
+}
+.js [data-blink].is-in .blink--scroll {
+  animation: blink 2.6s cubic-bezier(0.65, 0, 0.35, 1) 0.15s both;
+}

@@ -1,15 +1,19 @@
 /**
  * Editorial photography slots.
  *
- * Every photo is shown in black & white with a fine grain, so a mix of sources still looks like one shoot.
+ * TO ADD OR SWAP A PHOTO
+ * 1. Put the file in src/assets/images/ (JPG/WebP; 2400px+ wide for `hero`).
+ * 2. Import it below and set `src` on the matching slot, with a short `alt`.
  *
- * TO ADD A PHOTO
- * 1. Put the file in src/assets/images/ (JPG/WebP, 2000px+ on the long edge for `hero`).
- * 2. Import it below, e.g.   import hero from '../assets/images/hero.jpg';
- * 3. Set `src: hero` on the matching slot, and write a short `alt` describing it.
- *
- * Until `src` is set, the site shows a grey frame with the `brief` as the art direction for that shot.
+ * Photos are shown in their natural tone with a light film grain.
+ * Until `src` is set, the site shows a grey frame with the `brief` as art direction.
  */
+import aboutWalking from '../assets/images/about-walking.webp';
+import contactPhone from '../assets/images/contact-phone.webp';
+import tileCamera from '../assets/images/tile-camera.webp';
+import tileDesk from '../assets/images/tile-desk.webp';
+import tileMoodboard from '../assets/images/tile-moodboard.webp';
+
 export interface Slot {
   src?: ImageMetadata;
   alt: string;
@@ -21,27 +25,38 @@ export interface Slot {
 
 export const images = {
   hero: {
+    // To come — add the hero image here.
     alt: '',
-    brief: 'Photographer mid-shot, camera raised, motion blur. B&W, lots of wall space.',
+    brief: 'Hero image to come.',
   },
   about: {
-    alt: '',
-    brief: 'Woman working on a laptop, soft blur, side light. Portrait crop.',
+    src: aboutWalking,
+    alt: 'A woman in a black suit walks through a studio, sharp in focus, as two people blur past either side of her.',
+    brief: '',
+    focus: '50% 50%',
   },
   tileAbout: {
-    alt: '',
-    brief: 'Hands on a camera, close crop.',
+    src: tileCamera,
+    alt: 'A woman raises a camera to her eye, caught in motion blur.',
+    brief: '',
+    focus: '62% 50%',
   },
   tileServices: {
-    alt: '',
-    brief: 'Laptop and notebook on a desk, overhead.',
+    src: tileDesk,
+    alt: 'Overhead view of hands typing on a laptop and writing in a notebook beside an espresso and printed layouts.',
+    brief: '',
+    focus: '45% 50%',
   },
   tileWork: {
-    alt: '',
-    brief: 'Prints / contact sheets spread on a table.',
+    src: tileMoodboard,
+    alt: 'A woman walks past a wall of pinned brand references, including a MATA card reading “A different perspective”.',
+    brief: '',
+    focus: '50% 50%',
   },
   contact: {
-    alt: '',
-    brief: 'Woman on the phone, mid-laugh, blurred movement.',
+    src: contactPhone,
+    alt: 'A woman laughs on a phone call, gold rings catching the light.',
+    brief: '',
+    focus: '50% 35%',
   },
 } satisfies Record<string, Slot>;

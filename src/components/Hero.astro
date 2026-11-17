@@ -9,27 +9,25 @@ import { images } from '../data/images';
 
   <h1 class="hero__mark" id="hero-title">
     <span class="visually-hidden">MATA Studio</span>
-    <span class="hero__word" aria-hidden="true">
-      {['m', 'a', 't', 'a'].map((l, i) => <span style={`--i:${i}`}>{l}</span>)}
-    </span>
+    <span class="hero__word blink blink--load" aria-hidden="true">mata</span>
   </h1>
-
-  <div class="wrap hero__foot micro">
-    <span>Dubai-based</span>
-    <span>Working everywhere</span>
-  </div>
 </section>
 
 <section class="dark statement" aria-label="Introduction">
   <div class="wrap statement__inner">
-    <p class="micro statement__kicker" data-reveal>MATA Studio — Dubai</p>
-    <p class="headline center statement__title" data-reveal style="--d:1">
-      Change the way<br /><em>you’re</em> seen.
-    </p>
-    <p class="statement__lede center" data-reveal style="--d:2">
-      We’re a boutique digital marketing studio helping ambitious businesses build their presence, find their
-      audience and stand out for the right reasons.
-    </p>
+    <h2 class="headline center statement__title" data-reveal>
+      Change the way<br /><em>you’re seen.</em>
+    </h2>
+    <div class="statement__copy center">
+      <p class="statement__lede" data-reveal style="--d:1">
+        Every business has a story. How it’s told, where it shows up and the impression it leaves make all the
+        difference.
+      </p>
+      <p data-reveal style="--d:2">
+        We’re an independent digital marketing studio bringing together strategy, creativity and commercial thinking to
+        help ambitious businesses shape their presence, find their people and make a lasting impression.
+      </p>
+    </div>
     <div data-reveal style="--d:3"><a class="btn" href="#contact">Let’s talk</a></div>
   </div>
 </section>
@@ -44,7 +42,7 @@ import { images } from '../data/images';
   .hero :global(.hero__photo) {
     position: absolute;
     inset: 0;
-    animation: settle 2.4s var(--ease) both;
+    animation: settle 2.6s var(--ease) both;
   }
   .hero :global(.photo__ph) {
     align-items: flex-start;
@@ -75,20 +73,8 @@ import { images } from '../data/images';
     pointer-events: none;
   }
   .hero__word {
-    display: inline-flex;
-  }
-  .hero__word span {
     display: inline-block;
-    animation: rise 1.6s var(--ease) both;
-    animation-delay: calc(0.25s + var(--i) * 0.09s);
-  }
-  .hero__foot {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 1.5rem;
-    display: flex;
-    justify-content: space-between;
+    padding-inline: 0.06em;
   }
   @keyframes settle {
     from {
@@ -96,31 +82,32 @@ import { images } from '../data/images';
       filter: brightness(0.85);
     }
   }
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(0.12em);
-    }
-  }
 
   .statement__inner {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 2.25rem;
     padding-block: clamp(5.5rem, 13vw, 10rem);
-  }
-  .statement__kicker {
-    margin: 0;
-    color: rgba(247, 245, 241, 0.55);
   }
   .statement__title {
     font-size: clamp(2.1rem, 1.2rem + 3.6vw, 4.6rem);
   }
-  .statement__lede {
+  .statement__copy {
+    display: grid;
+    gap: 1.1rem;
+    max-width: 38rem;
+  }
+  .statement__copy p {
     margin: 0;
-    max-width: 36rem;
-    color: rgba(247, 245, 241, 0.7);
+    color: rgba(247, 245, 241, 0.68);
+  }
+  .statement__copy .statement__lede {
+    font-family: var(--serif);
+    font-variation-settings: 'opsz' 22;
+    font-size: clamp(1.15rem, 1rem + 0.5vw, 1.4rem);
+    line-height: 1.45;
+    color: var(--paper);
   }
   @media (max-width: 560px) {
     .hero {

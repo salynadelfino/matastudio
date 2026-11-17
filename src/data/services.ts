@@ -34,17 +34,17 @@ export const services: Service[] = [
   },
 ];
 
-export const differentiators = [
+export const differentiators: { display: [string, string]; body: string }[] = [
   {
-    title: 'Commercially minded.',
-    body: 'We understand that marketing needs to do more than look good. It needs to work.',
+    display: ['Commercially', 'considered'],
+    body: 'Good marketing should do more than look good. It should have a purpose, understand the audience and contribute to the bigger picture. We bring commercial thinking into every creative decision.',
   },
   {
-    title: 'Personal by design.',
-    body: 'A considered, hands-on approach. No unnecessary layers between you and the people doing the work.',
+    display: ['Personal', 'by nature'],
+    body: 'No unnecessary layers, off-the-shelf thinking or disappearing acts. We believe the best work comes from genuine collaboration, clear communication and being invested in the businesses we work with.',
   },
   {
-    title: 'Strategy meets creativity.',
-    body: 'We bring together commercial thinking, creative execution and a clear understanding of the customer journey.',
+    display: ['Strategy', 'with a creative edge'],
+    body: 'Knowing what to say matters just as much as how you say it. We bring together strategic direction and creative execution to make sure your brand doesn’t just show up, but shows up with intention.',
   },
 ];
