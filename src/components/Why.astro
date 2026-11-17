@@ -1,0 +1,76 @@
+---
+import { differentiators } from '../data/services';
+const numerals = ['i.', 'ii.', 'iii.', 'iv.', 'v.'];
+---
+
+<section class="section why" id="why" aria-labelledby="why-title">
+  <div class="wrap">
+    <p class="label" data-reveal><span class="num">04</span> Why MATA</p>
+    <h2 class="display why__title" id="why-title" data-reveal-lines>
+      <span class="line"><span style="--i:0">More than marketing.</span></span>
+      <span class="line"><span style="--i:1">A little more <em>perspective.</em></span></span>
+    </h2>
+
+    <ol class="why__list">
+      {
+        differentiators.map((d, i) => (
+          <li data-reveal style={`--d:${i}`}>
+            <span class="why__num">{numerals[i]}</span>
+            <h3>{d.title}</h3>
+            <p>{d.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .why__title {
+    font-size: clamp(2.4rem, 1.4rem + 4vw, 5.25rem);
+    margin: 2.5rem 0 clamp(3.5rem, 7vw, 6rem);
+  }
+  .why__title em {
+    color: var(--olive);
+  }
+  .why__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+  .why__list li {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--espresso);
+  }
+  .why__num {
+    display: block;
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--clay);
+    margin-bottom: 2.5rem;
+  }
+  .why__list h3 {
+    margin: 0 0 0.75rem;
+    font-family: var(--serif);
+    font-weight: 350;
+    font-size: clamp(1.5rem, 1.2rem + 0.8vw, 2rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .why__list p {
+    margin: 0;
+    color: var(--muted);
+    max-width: 32ch;
+  }
+  @media (max-width: 860px) {
+    .why__list {
+      grid-template-columns: 1fr;
+    }
+    .why__num {
+      margin-bottom: 1rem;
+    }
+  }
+</style>

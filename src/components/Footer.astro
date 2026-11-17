@@ -1,0 +1,104 @@
+---
+import { nav, site } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <p class="footer__line">Change the way you’re <em>seen.</em></p>
+      <nav aria-label="Footer">
+        <ul>
+          {nav.map((n) => <li><a class="link" href={n.href}>{n.label}</a></li>)}
+        </ul>
+      </nav>
+      <ul class="footer__social">
+        {site.socials.map((s) => <li><a class="link" href={s.href} target="_blank" rel="noopener">{s.label}</a></li>)}
+        <li><a class="link" href={`mailto:${site.email}`}>Email</a></li>
+      </ul>
+    </div>
+
+    <p class="footer__mark" aria-hidden="true">
+      <span>MAT</span><svg viewBox="0 0 100 100"><path d="M4 50C24 18 76 18 96 50C76 82 24 82 4 50Z" fill="none" stroke="currentColor" stroke-width="2.2" vector-effect="non-scaling-stroke"/><circle cx="50" cy="50" r="15" fill="currentColor"/></svg><span>A</span>
+    </p>
+
+    <div class="footer__base">
+      <span>© {year} {site.name}</span>
+      <span>{site.location}</span>
+      <a href="#top" class="link">Back to top ↑</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-top: clamp(4rem, 8vw, 6rem);
+    padding-bottom: 1.5rem;
+  }
+  .footer__top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .footer__line {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.5rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .footer__line em { color: var(--olive); }
+  .footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+  .footer .link {
+    background-size: 0 1px;
+    background-position: 100% 100%;
+  }
+  .footer .link:hover {
+    background-size: 100% 1px;
+    background-position: 0 100%;
+  }
+  .footer__mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: clamp(3rem, 7vw, 5rem) 0 1rem;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-variation-settings: 'opsz' 144;
+    font-size: 27vw;
+    line-height: 0.78;
+    letter-spacing: -0.05em;
+    color: var(--espresso);
+  }
+  @media (min-width: 1440px) {
+    .footer__mark { font-size: 390px; }
+  }
+  .footer__mark svg {
+    width: 0.62em;
+    height: 0.62em;
+    margin: 0 -0.03em 0 0.03em;
+  }
+  .footer__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  @media (max-width: 760px) {
+    .footer__top { grid-template-columns: 1fr 1fr; }
+    .footer__line { grid-column: 1 / -1; }
+  }
+</style>

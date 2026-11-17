@@ -1,0 +1,312 @@
+---
+import Wordmark from './Wordmark.astro';
+import { nav, site } from '../data/site';
+const links = nav.filter((n) => n.label !== 'Home');
+---
+
+<header class="nav" data-nav>
+  <div class="wrap nav__inner">
+    <a href="#top" class="nav__brand" aria-label={`${site.name} — back to top`}>
+      <Wordmark />
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} data-nav-link>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a href="#contact" class="nav__cta">Let’s talk</a>
+
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+      <span class="visually-hidden">Menu</span>
+      <span class="bars" aria-hidden="true"><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+
+<div class="menu" id="menu" data-menu hidden>
+  <nav class="wrap menu__inner" aria-label="Mobile">
+    <ol>
+      {
+        nav.map((item, i) => (
+          <li style={`--i:${i}`}>
+            <a href={item.href} data-menu-link>
+              <span class="menu__num">0{i + 1}</span>
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+    <div class="menu__foot">
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <span>{site.location}</span>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    transition:
+      background-color 0.5s var(--ease),
+      box-shadow 0.5s var(--ease),
+      transform 0.6s var(--ease);
+  }
+  .nav.is-scrolled {
+    background: rgba(244, 239, 230, 0.86);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .nav.is-hidden {
+    transform: translateY(-100%);
+  }
+  .nav__inner {
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    transition: height 0.5s var(--ease);
+  }
+  .nav.is-scrolled .nav__inner {
+    height: 3.75rem;
+  }
+  .nav__brand {
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .nav__links ul {
+    display: flex;
+    gap: 2.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav__links a {
+    position: relative;
+    font-size: 0.875rem;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s var(--ease);
+  }
+  .nav__links a:hover::after,
+  .nav__links a.is-active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  .nav__cta {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.6rem 1.15rem;
+    border: 1px solid var(--espresso);
+    border-radius: 999px;
+    transition:
+      background-color 0.4s var(--ease),
+      color 0.4s var(--ease);
+  }
+  .nav__cta:hover {
+    background: var(--espresso);
+    color: var(--ivory);
+  }
+
+  .nav__toggle {
+    display: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-right: -0.6rem;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .bars {
+    display: grid;
+    gap: 6px;
+    width: 24px;
+    margin: auto;
+  }
+  .bars span {
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 0.45s var(--ease);
+  }
+  .nav__toggle[aria-expanded='true'] .bars span:first-child {
+    transform: translateY(3.75px) rotate(45deg);
+  }
+  .nav__toggle[aria-expanded='true'] .bars span:last-child {
+    transform: translateY(-3.75px) rotate(-45deg);
+  }
+
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: var(--ivory);
+    padding-top: calc(var(--nav-h) + 2rem);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+  }
+  .menu[hidden] {
+    display: none;
+  }
+  .menu.is-open {
+    opacity: 1;
+  }
+  .menu__inner {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-bottom: 2rem;
+  }
+  .menu ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .menu li {
+    border-top: 1px solid var(--line);
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.6s var(--ease),
+      transform 0.6s var(--ease);
+    transition-delay: calc(var(--i) * 50ms + 80ms);
+  }
+  .menu.is-open li {
+    opacity: 1;
+    transform: none;
+  }
+  .menu li a {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2.2rem, 10vw, 3.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    text-decoration: none;
+  }
+  .menu__num {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    width: 1.75rem;
+  }
+  .menu__foot {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 860px) {
+    .nav__links,
+    .nav__cta {
+      display: none;
+    }
+    .nav__toggle {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  const navEl = document.querySelector<HTMLElement>('[data-nav]')!;
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]')!;
+  const menu = document.querySelector<HTMLElement>('[data-menu]')!;
+
+  // Scroll state: compact once scrolled, tuck away when scrolling down, return on scroll up.
+  let lastY = window.scrollY;
+  let ticking = false;
+  const onScroll = () => {
+    const y = window.scrollY;
+    navEl.classList.toggle('is-scrolled', y > 24);
+    const goingDown = y > lastY && y > window.innerHeight * 0.6;
+    if (!menu.classList.contains('is-open')) navEl.classList.toggle('is-hidden', goingDown);
+    lastY = y;
+    ticking = false;
+  };
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    },
+    { passive: true },
+  );
+  onScroll();
+
+  // Active section highlighting
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+  const sections = [...links]
+    .map((a) => document.querySelector(a.getAttribute('href')!))
+    .filter((s): s is Element => !!s);
+  const spy = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        links.forEach((a) => a.classList.toggle('is-active', a.getAttribute('href') === `#${e.target.id}`));
+      }
+    },
+    { rootMargin: '-45% 0px -50% 0px' },
+  );
+  sections.forEach((s) => spy.observe(s));
+
+  // Mobile menu
+  const setOpen = (open: boolean) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (open) {
+      menu.hidden = false;
+      navEl.classList.remove('is-hidden');
+      requestAnimationFrame(() => menu.classList.add('is-open'));
+    } else {
+      menu.classList.remove('is-open');
+      setTimeout(() => {
+        if (!menu.classList.contains('is-open')) menu.hidden = true;
+      }, 400);
+    }
+  };
+  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  menu.querySelectorAll('[data-menu-link]').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+  window.matchMedia('(min-width: 861px)').addEventListener('change', (m) => m.matches && setOpen(false));
+</script>

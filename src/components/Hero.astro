@@ -1,0 +1,232 @@
+---
+import Eye from './Eye.astro';
+import { services } from '../data/services';
+---
+
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="wrap hero__grid">
+    <div class="hero__meta" data-reveal>
+      <span>MATA Studio</span>
+      <span class="hide-sm">Boutique digital marketing</span>
+      <span>Dubai, UAE &nbsp;·&nbsp; <span data-dubai-time>--:--</span> GST</span>
+    </div>
+
+    <div class="hero__eye" data-reveal style="--d:3">
+      <span class="crop crop--tl"></span><span class="crop crop--tr"></span>
+      <span class="crop crop--bl"></span><span class="crop crop--br"></span>
+      <Eye />
+    </div>
+
+    <h1 class="display hero__title" id="hero-title" data-reveal-lines>
+      <span class="visually-hidden">MATA Studio — </span>
+      <span class="line"><span style="--i:0">Change</span></span>
+      <span class="line"><span style="--i:1">the way</span></span>
+      <span class="line"><span style="--i:2">you’re <em>seen.</em></span></span>
+    </h1>
+
+    <div class="hero__foot">
+      <p class="lede hero__lede" data-reveal style="--d:4">
+        We’re a boutique digital marketing studio helping ambitious businesses build their presence, find their
+        audience and stand out for the right reasons.
+      </p>
+      <div class="hero__actions" data-reveal style="--d:5">
+        <p class="hero__where">Dubai-based.<br />Working everywhere.</p>
+        <a class="btn" href="#contact">
+          Let’s talk
+          <svg class="arrow" width="16" height="10" viewBox="0 0 16 10" aria-hidden="true"
+            ><path d="M0 5h15M11 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"></path></svg
+          >
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      {
+        [0, 1].map(() => (
+          <div class="ticker__set">
+            {services.map((s) => (
+              <span>
+                {s.title}
+                <i>◦</i>
+              </span>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    padding-top: calc(var(--nav-h) + clamp(1.5rem, 4vw, 3rem));
+  }
+  .hero__grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto 1fr auto;
+    column-gap: 1.5rem;
+    align-content: start;
+  }
+  .hero__meta {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .hero__title {
+    grid-column: 1 / span 9;
+    grid-row: 2;
+    align-self: end;
+    position: relative;
+    z-index: 1;
+    font-size: clamp(3.6rem, 0.5rem + 10.4vw, 11.5rem);
+    line-height: 0.86;
+    margin-top: clamp(1.5rem, 4vw, 3rem);
+  }
+  .hero__title .line:nth-child(3) {
+    padding-left: 0.9em;
+  }
+  .hero__title em {
+    color: var(--olive);
+  }
+  .hero__eye {
+    grid-column: 8 / -1;
+    grid-row: 2;
+    align-self: center;
+    justify-self: end;
+    position: relative;
+    width: min(100%, 27rem, 54svh);
+    margin-top: clamp(1rem, 2vw, 2rem);
+    padding: clamp(1rem, 2.5vw, 2rem);
+  }
+  .crop {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 0 solid var(--espresso);
+  }
+  .crop--tl { top: 0; left: 0; border-width: 1px 0 0 1px; }
+  .crop--tr { top: 0; right: 0; border-width: 1px 1px 0 0; }
+  .crop--bl { bottom: 0; left: 0; border-width: 0 0 1px 1px; }
+  .crop--br { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
+
+  .hero__foot {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 1.5rem;
+    align-items: end;
+    padding-block: clamp(1.75rem, 3.5vw, 2.75rem);
+  }
+  .hero__lede {
+    grid-column: 1 / span 6;
+    margin: 0;
+    max-width: 36ch;
+    font-size: clamp(1.15rem, 0.9rem + 0.75vw, 1.5rem);
+  }
+  .hero__actions {
+    grid-column: 8 / -1;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .hero__where {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .ticker {
+    border-block: 1px solid var(--line);
+    overflow: hidden;
+    padding-block: 1.1rem;
+  }
+  .ticker__track {
+    display: flex;
+    width: max-content;
+    animation: ticker 48s linear infinite;
+  }
+  .ticker__set {
+    display: flex;
+  }
+  .ticker span {
+    display: inline-flex;
+    align-items: center;
+    gap: 2.5rem;
+    padding-right: 2.5rem;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  .ticker i {
+    font-style: normal;
+    color: var(--clay);
+  }
+  @keyframes ticker {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 960px) {
+    .hero__title {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      margin-top: 0;
+    }
+    .hero__eye {
+      grid-column: 4 / -1;
+      grid-row: 2;
+      width: min(100%, 26rem);
+      margin-block: 1.5rem 0.5rem;
+    }
+    .hero__grid {
+      grid-template-rows: auto auto auto auto;
+    }
+    .hero__foot {
+      grid-row: 4;
+    }
+    .hero__lede,
+    .hero__actions {
+      grid-column: 1 / -1;
+    }
+    .hero__actions {
+      margin-top: 2rem;
+    }
+  }
+  @media (max-width: 560px) {
+    .hide-sm {
+      display: none;
+    }
+    .hero__eye {
+      grid-column: 4 / -1;
+      width: min(100%, 15rem);
+      margin-block: 1rem 0;
+    }
+    .hero__actions {
+      margin-top: 1.5rem;
+    }
+    .hero__title .line:nth-child(3) {
+      padding-left: 0;
+    }
+  }
+</style>

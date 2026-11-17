@@ -1,0 +1,115 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { projects } from '../data/projects';
+
+// Editorial rhythm: the layout cycles through five compositions, so any number of projects works.
+const layout = [
+  { cls: 'w-a', ratio: '4 / 3', sizes: '(max-width: 760px) 100vw, 58vw' },
+  { cls: 'w-b', ratio: '4 / 5', sizes: '(max-width: 760px) 100vw, 33vw' },
+  { cls: 'w-c', ratio: '4 / 5', sizes: '(max-width: 760px) 100vw, 33vw' },
+  { cls: 'w-d', ratio: '3 / 2', sizes: '(max-width: 760px) 100vw, 50vw' },
+  { cls: 'w-e', ratio: '21 / 9', sizes: '100vw' },
+];
+const hasPrior = projects.some((p) => p.attribution === 'prior');
+---
+
+<section class="section work" id="work" aria-labelledby="work-title">
+  <div class="wrap">
+    <div class="work__head">
+      <p class="label" data-reveal><span class="num">03</span> Selected work</p>
+      <h2 class="display h2" id="work-title" data-reveal-lines>
+        <span class="line"><span style="--i:0">A little of what</span></span>
+        <span class="line"><span style="--i:1">we’ve been <em>working on.</em></span></span>
+      </h2>
+      {
+        hasPrior && (
+          <p class="work__note" data-reveal>
+            Projects marked <strong>Prior experience</strong> were delivered by our founder before MATA Studio. Everything
+            else is MATA’s own work.
+          </p>
+        )
+      }
+    </div>
+
+    <div class="work__grid">
+      {
+        projects.map((project, i) => {
+          const l = layout[i % layout.length];
+          return (
+            <div class={`work__item ${l.cls}`} style={`--ratio:${l.ratio}`} data-reveal>
+              <ProjectCard project={project} index={i} sizes={l.sizes} />
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .work {
+    background: var(--espresso);
+    color: var(--ivory);
+  }
+  .work ::selection {
+    background: var(--ivory);
+    color: var(--espresso);
+  }
+  .work__head {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 1.5rem;
+    row-gap: 2.5rem;
+    margin-bottom: clamp(3.5rem, 8vw, 7rem);
+  }
+  .work__head .label,
+  .work__head h2 {
+    grid-column: 1 / -1;
+  }
+  .work__head h2 .line:nth-child(2) {
+    padding-left: 1.2em;
+  }
+  .work__head em {
+    color: var(--sand);
+  }
+  .work__note {
+    grid-column: 8 / -1;
+    margin: 0;
+    font-size: 0.9rem;
+    color: rgba(244, 239, 230, 0.65);
+    max-width: 32rem;
+  }
+  .work__note strong {
+    font-weight: 500;
+    color: var(--ivory);
+  }
+
+  .work__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 1.5rem;
+    row-gap: clamp(4rem, 8vw, 7rem);
+  }
+  .w-a { grid-column: 1 / span 7; }
+  .w-b { grid-column: 9 / span 4; margin-top: clamp(4rem, 14vw, 13rem); }
+  .w-c { grid-column: 2 / span 4; }
+  .w-d { grid-column: 7 / span 6; margin-top: clamp(3rem, 10vw, 9rem); }
+  .w-e { grid-column: 1 / -1; }
+
+  .work__item :global(.project__frame) {
+    aspect-ratio: var(--ratio);
+  }
+
+  @media (max-width: 760px) {
+    .work__grid > * {
+      grid-column: 1 / -1 !important;
+      margin-top: 0 !important;
+    }
+    .work__item :global(.project__frame) {
+      aspect-ratio: 4 / 3;
+    }
+    .work__note {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

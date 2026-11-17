@@ -1,0 +1,180 @@
+---
+import { Image } from 'astro:assets';
+import { attributionLabel, type Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+  index: number;
+  sizes: string;
+}
+const { project: p, index, sizes } = Astro.props;
+const num = String(index + 1).padStart(2, '0');
+const Tag = p.href ? 'a' : 'div';
+---
+
+<article class="project">
+  <Tag class="project__frame" {...p.href ? { href: p.href, target: '_blank', rel: 'noopener' } : {}}>
+    {
+      p.image ? (
+        <Image src={p.image} alt={p.imageAlt ?? p.title} widths={[480, 800, 1200, 1800]} sizes={sizes} loading="lazy" />
+      ) : (
+        <div class="project__ph" data-tone={index % 5}>
+          <span class="ph__num">{num}</span>
+          <span class="ph__note">Image placeholder</span>
+        </div>
+      )
+    }
+    {p.href && <span class="visually-hidden">View {p.title} (opens in a new tab)</span>}
+  </Tag>
+
+  <div class="project__meta">
+    <p class="project__kicker">
+      <span>{num}</span>
+      <span>{p.category}</span>
+      <span>{p.year}</span>
+    </p>
+    <h3 class="project__title">
+      {p.title}
+      {p.placeholder && <span class="project__flag">Placeholder</span>}
+    </h3>
+    <p class="project__summary">{p.summary}</p>
+    <p class="project__scope">
+      <span class:list={['project__by', `is-${p.attribution}`]}>{attributionLabel[p.attribution]}</span>
+      {p.scope.join(' · ')}
+    </p>
+  </div>
+</article>
+
+<style>
+  .project__frame {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: var(--ratio, 4 / 3);
+    background: var(--espresso-2);
+  }
+  .project__frame :global(img),
+  .project__ph {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.4s var(--ease);
+  }
+  .project:hover .project__frame :global(img),
+  .project:hover .project__ph {
+    transform: scale(1.035);
+  }
+
+  .project__ph {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: clamp(1rem, 2vw, 1.5rem);
+    color: rgba(244, 239, 230, 0.75);
+    background:
+      radial-gradient(120% 90% at 70% 20%, rgba(244, 239, 230, 0.1), transparent 60%),
+      var(--tone);
+  }
+  .project__ph[data-tone='0'] { --tone: #5d604a; }
+  .project__ph[data-tone='1'] { --tone: #8a6a53; }
+  .project__ph[data-tone='2'] { --tone: #4a3a2e; }
+  .project__ph[data-tone='3'] { --tone: #9a9a84; }
+  .project__ph[data-tone='4'] { --tone: #6b5444; }
+  .project__ph::before {
+    /* viewfinder frame */
+    content: '';
+    position: absolute;
+    inset: clamp(1rem, 2vw, 1.5rem);
+    border: 1px solid rgba(244, 239, 230, 0.22);
+  }
+  .ph__num {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(4rem, 9vw, 9rem);
+    line-height: 1;
+    color: rgba(244, 239, 230, 0.2);
+  }
+  .ph__note {
+    position: relative;
+    margin: 0.7rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .project__meta {
+    padding-top: 1.25rem;
+  }
+  .project__meta p {
+    margin: 0;
+  }
+  .project__kicker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(244, 239, 230, 0.6);
+  }
+  .project__title {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0.7rem 0 0.6rem;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.4rem);
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+  .project__flag {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.55rem;
+    border: 1px dashed rgba(244, 239, 230, 0.4);
+    border-radius: 999px;
+    color: rgba(244, 239, 230, 0.7);
+    transform: translateY(-0.2em);
+  }
+  .project__summary {
+    max-width: 38ch;
+    font-size: 0.95rem;
+    color: rgba(244, 239, 230, 0.72);
+  }
+  .project__scope {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.9rem;
+    margin-top: 1rem !important;
+    font-size: 0.82rem;
+    color: rgba(244, 239, 230, 0.6);
+  }
+  .project__by {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.32rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid rgba(244, 239, 230, 0.35);
+    color: var(--ivory);
+  }
+  .project__by.is-mata {
+    background: var(--ivory);
+    color: var(--espresso);
+    border-color: var(--ivory);
+  }
+</style>

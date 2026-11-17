@@ -1,0 +1,342 @@
+---
+import { site } from '../data/site';
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+---
+
+<section class="contact" id="contact" aria-labelledby="contact-title">
+  <div class="wrap section contact__grid">
+    <div class="contact__intro">
+      <p class="label" data-reveal><span class="num">05</span> Contact</p>
+      <h2 class="display contact__title" id="contact-title" data-reveal-lines>
+        <span class="line"><span style="--i:0">Let’s make</span></span>
+        <span class="line"><span style="--i:1">something</span></span>
+        <span class="line"><span style="--i:2"><em>happen.</em></span></span>
+      </h2>
+      <p class="contact__copy" data-reveal>
+        Have a business you want to grow, a brand that needs a fresh perspective or simply an idea you’d like to
+        explore? We’d love to hear about it.
+      </p>
+
+      <dl class="contact__details" data-reveal>
+        <div>
+          <dt>Email</dt>
+          <dd><a class="link contact__email" href={`mailto:${site.email}`}>{site.email}</a></dd>
+        </div>
+        <div>
+          <dt>Follow</dt>
+          <dd class="contact__socials">
+            {
+              site.socials.map((s) => (
+                <a class="link" href={s.href} target="_blank" rel="noopener">
+                  {s.label}
+                </a>
+              ))
+            }
+          </dd>
+        </div>
+        <div>
+          <dt>Studio</dt>
+          <dd>{site.location} · <span data-dubai-time>--:--</span> local</dd>
+        </div>
+      </dl>
+    </div>
+
+    <form class="form" data-contact-form data-endpoint={endpoint} data-email={site.email} novalidate data-reveal>
+      <div class="field">
+        <label for="f-name">Name <span aria-hidden="true">*</span></label>
+        <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name" />
+        <p class="field__error" id="e-name" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="f-email">Email <span aria-hidden="true">*</span></label>
+        <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email" />
+        <p class="field__error" id="e-email" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="f-company">Company <span class="opt">(optional)</span></label>
+        <input id="f-company" name="company" type="text" autocomplete="organization" />
+      </div>
+      <div class="field">
+        <label for="f-message">Tell us a little about it <span aria-hidden="true">*</span></label>
+        <textarea id="f-message" name="message" rows="4" required aria-describedby="e-message"></textarea>
+        <p class="field__error" id="e-message" aria-live="polite"></p>
+      </div>
+      <!-- spam trap: real people never see or fill this -->
+      <div class="hp" aria-hidden="true">
+        <label for="f-website">Website</label>
+        <input id="f-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="form__foot">
+        <button class="btn btn--light" type="submit">
+          <span data-submit-label>Send enquiry</span>
+          <svg class="arrow" width="16" height="10" viewBox="0 0 16 10" aria-hidden="true"
+            ><path d="M0 5h15M11 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"></path></svg
+          >
+        </button>
+        <p class="form__status" role="status" aria-live="polite" data-status></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: var(--olive);
+    color: var(--ivory);
+  }
+  .contact ::selection {
+    background: var(--ivory);
+    color: var(--olive);
+  }
+  .contact__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 1.5rem;
+    row-gap: 4rem;
+  }
+  .contact__intro {
+    grid-column: 1 / span 6;
+  }
+  .contact__title {
+    font-size: clamp(3.2rem, 1.5rem + 6.5vw, 8rem);
+    margin: 2.5rem 0 2rem;
+  }
+  .contact__title .line:nth-child(3) {
+    padding-left: 1em;
+  }
+  .contact__title em {
+    color: var(--sand);
+  }
+  .contact__copy {
+    max-width: 30rem;
+    margin: 0 0 3rem;
+    color: rgba(244, 239, 230, 0.8);
+  }
+  .contact__details {
+    margin: 0;
+    display: grid;
+    gap: 1.25rem;
+  }
+  .contact__details div {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 1rem;
+    align-items: baseline;
+  }
+  .contact__details dt {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(244, 239, 230, 0.6);
+  }
+  .contact__details dd {
+    margin: 0;
+  }
+  .contact__email {
+    font-family: var(--serif);
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    font-weight: 350;
+    letter-spacing: -0.01em;
+    word-break: break-word;
+  }
+  .contact__socials {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .form {
+    grid-column: 8 / -1;
+    align-self: end;
+    display: grid;
+    gap: 1.75rem;
+  }
+  .field {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .field label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(244, 239, 230, 0.75);
+  }
+  .opt {
+    text-transform: none;
+    letter-spacing: 0;
+    opacity: 0.7;
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 0.6rem 0;
+    border: 0;
+    border-bottom: 1px solid rgba(244, 239, 230, 0.35);
+    border-radius: 0;
+    background: transparent;
+    color: var(--ivory);
+    font: 400 1.15rem/1.4 var(--serif);
+    transition: border-color 0.3s var(--ease);
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 6.5rem;
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-bottom-color: var(--ivory);
+    box-shadow: 0 1px 0 var(--ivory);
+  }
+  .field [aria-invalid='true'] {
+    border-bottom-color: #e8b9a0;
+  }
+  .field__error {
+    margin: 0;
+    min-height: 1.1em;
+    font-size: 0.8rem;
+    color: #f0c7b0;
+  }
+  .field__error:empty {
+    min-height: 0;
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .form__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+  .form__status {
+    margin: 0;
+    flex: 1 1 16rem;
+    font-size: 0.9rem;
+    color: rgba(244, 239, 230, 0.85);
+  }
+  .form__status:empty {
+    display: none;
+  }
+  .form__status a {
+    color: var(--ivory);
+  }
+  .form button[disabled] {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  @media (max-width: 960px) {
+    .contact__intro,
+    .form {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 480px) {
+    .contact__details div {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+
+  if (form) {
+    const endpoint = form.dataset.endpoint?.trim() ?? '';
+    const studioEmail = form.dataset.email ?? '';
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const label = form.querySelector<HTMLElement>('[data-submit-label]')!;
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    const rules: Record<string, (v: string) => string> = {
+      name: (v) => (v.trim().length < 2 ? 'Please tell us your name.' : ''),
+      email: (v) =>
+        !v.trim() ? 'We need an email to reply to.' : !emailRe.test(v.trim()) ? 'That email doesn’t look quite right.' : '',
+      message: (v) => (v.trim().length < 10 ? 'A sentence or two is plenty — just enough to get us started.' : ''),
+    };
+
+    const check = (name: string) => {
+      const field = form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement;
+      const msg = rules[name](field.value);
+      field.setAttribute('aria-invalid', String(!!msg));
+      form.querySelector(`#e-${name}`)!.textContent = msg;
+      return !msg;
+    };
+
+    // Validate a field once the visitor leaves it, then live while they correct it.
+    Object.keys(rules).forEach((name) => {
+      const field = form.elements.namedItem(name) as HTMLElement;
+      field.addEventListener('blur', () => {
+        if ((field as HTMLInputElement).value) check(name);
+      });
+      field.addEventListener('input', () => {
+        if (field.getAttribute('aria-invalid') === 'true') check(name);
+      });
+    });
+
+    const setStatus = (html: string) => (status.innerHTML = html);
+    const escape = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      setStatus('');
+      const results = Object.keys(rules).map(check);
+      if (results.includes(false)) {
+        const firstInvalid = form.querySelector<HTMLElement>('[aria-invalid="true"]');
+        firstInvalid?.focus();
+        return;
+      }
+
+      const data = new FormData(form);
+      if (data.get('_gotcha')) return; // bot
+
+      const name = String(data.get('name')).trim();
+      const email = String(data.get('email')).trim();
+      const company = String(data.get('company') ?? '').trim();
+      const message = String(data.get('message')).trim();
+
+      // No submission service configured: be upfront and hand over to the visitor's email app.
+      if (!endpoint) {
+        const subject = `Enquiry from ${name}${company ? ` (${company})` : ''}`;
+        const body = `${message}\n\n—\n${name}\n${email}${company ? `\n${company}` : ''}`;
+        const mailto = `mailto:${studioEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        setStatus(
+          `Opening your email app with your message ready to send. If nothing happens, email us directly at <a href="mailto:${escape(studioEmail)}">${escape(studioEmail)}</a>.`,
+        );
+        window.location.href = mailto;
+        return;
+      }
+
+      button.disabled = true;
+      label.textContent = 'Sending…';
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        form.querySelectorAll('[aria-invalid]').forEach((f) => f.removeAttribute('aria-invalid'));
+        setStatus(`Thank you, ${escape(name.split(' ')[0])}. Your message is with us and we’ll be in touch soon.`);
+      } catch {
+        setStatus(
+          `Sorry, that didn’t send. Please try again, or email us at <a href="mailto:${escape(studioEmail)}">${escape(studioEmail)}</a>.`,
+        );
+      } finally {
+        button.disabled = false;
+        label.textContent = 'Send enquiry';
+      }
+    });
+  }
+</script>
